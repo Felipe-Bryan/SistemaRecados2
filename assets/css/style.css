@@ -1,0 +1,29 @@
+.active {
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.inactive {
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.link {
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.ask {
+  color: white;
+  font-weight: 600;
+}
