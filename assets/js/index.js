@@ -202,6 +202,7 @@ function showHome() {
   let btnAdd = document.getElementById('btnAdd');
   let btnLogout = document.getElementById('btnLogout');
   let indexScreen = document.getElementById('index');
+  let Taskstable = document.getElementById('Taskstable');
 
   let welcomeMsg = document.getElementById('welcomeMsg');
 
@@ -210,20 +211,7 @@ function showHome() {
   btnAdd.classList.remove('d-none');
   btnLogout.classList.remove('d-none');
   welcomeMsg.innerHTML = `Olá, ${loggedUser.name}`;
-}
-
-// mostrar janela index
-
-function showIndex() {
-  let homeScreen = document.getElementById('home');
-  let btnAdd = document.getElementById('btnAdd');
-  let btnLogout = document.getElementById('btnLogout');
-  let indexScreen = document.getElementById('index');
-
-  homeScreen.classList.add('d-none');
-  btnAdd.classList.add('d-none');
-  btnLogout.classList.add('d-none');
-  indexScreen.classList.remove('d-none');
+  Taskstable.classList.remove('d-none');
 }
 
 // Logout
@@ -233,7 +221,7 @@ function logout() {
   localStorage.removeItem('session');
   localStorage.removeItem('loggedUser');
 
-  showIndex();
+  location.href = './index.html';
 }
 
 // Definir array de Recados
