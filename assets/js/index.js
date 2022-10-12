@@ -265,6 +265,9 @@ function addNewTask() {
   recados.push(task);
   modalAdd.hide();
   saveToStorage();
+  newTaskDetailIpt.value = '';
+  newTaskDescriptionIpt.value = '';
+
   createTable(recados);
 }
 
