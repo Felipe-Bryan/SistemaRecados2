@@ -69,7 +69,6 @@ function passwordIptChange(id) {
 
 // Listar inputs
 let inputs = document.querySelectorAll('input');
-console.log(inputs);
 
 // Verificar users no localStorage
 let usersStorage = localStorage.getItem('usersStorage');
@@ -80,7 +79,6 @@ usersStorage = localStorage.getItem('usersStorage');
 
 // Pegar botão de cadastrar
 const btnCreate = document.getElementById('newUserBtn');
-
 btnCreate.addEventListener('click', (e) => {
   e.preventDefault();
   let validOK = validar();
@@ -135,4 +133,55 @@ function createUser() {
 
 function saveUser(newUser) {
   localStorage.setItem('usersStorage', JSON.stringify(newUser));
+}
+
+// Logar no sistema
+
+const btnLogin = document.getElementById('loginBtn');
+let iptEmail = inputs[0];
+let iptPassword = inputs[1];
+let logged = sessionStorage.getItem('logged');
+const session = localStorage.getItem('session');
+
+checklogged();
+
+btnLogin.addEventListener('click', (e) => {
+  e.preventDefault();
+  login();
+});
+
+function login() {
+  const users = JSON.parse(localStorage.getItem('usersStorage'));
+
+  const userFound = users.find((value) => value.email === iptEmail.value && value.password === iptPassword.value);
+  const email = iptEmail.value;
+  const checksession = inputs[2].checked;
+
+  if (userFound) {
+    localStorage.setItem('loggedUser', JSON.stringify(userFound));
+    saveSession(email, checksession);
+    location.href = './home.html';
+  } else {
+    alert('E-mail ou senha incorretos');
+  }
+}
+
+function saveSession(data, saveSession) {
+  if (saveSession) {
+    localStorage.setItem('session', data);
+  }
+  sessionStorage.setItem('logged', data);
+}
+
+function checklogged() {
+  if (session) {
+    sessionStorage.setItem('logged', session);
+    logged = session;
+  }
+
+  if (logged) {
+    saveSession(logged, session);
+
+    window.location.href = '/home.html';
+  }
 }
