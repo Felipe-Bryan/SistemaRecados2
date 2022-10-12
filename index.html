@@ -11,6 +11,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/animations.css" />
     <title>Recados</title>
   </head>
   <body class="p-0 m-0">
@@ -21,12 +22,12 @@
           <div>
             <h3 class="text-center">Entrar</h3>
             <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="emailIpt" placeholder="name@example.com" />
+              <input type="email" class="form-control" id="emailIpt" placeholder="name@example.com" required />
               <label for="floatingInput">Email</label>
             </div>
             <div class="input-group mb-3">
               <div class="form-floating">
-                <input type="password" class="form-control" id="passwordIpt-1" placeholder="Senha" />
+                <input type="password" class="form-control" id="passwordIpt-1" placeholder="Senha" required />
                 <label for="floatingInputGroup1">Senha</label>
               </div>
               <span class="input-group-text" onclick="passwordIptChange(1)"><img id="eye-1" src="./assets/images/eye.svg" alt="" /></span>
@@ -52,23 +53,23 @@
           <div>
             <h3 class="text-center">Novo usuário</h3>
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="nameIpt" placeholder="João" />
+              <input type="text" class="form-control" id="nameIpt" placeholder="João" required />
               <label for="floatingInput">Nome</label>
             </div>
             <div class="form-floating mb-3">
-              <input type="email" class="form-control" id="newEmailIpt" placeholder="name@example.com" />
+              <input type="email" class="form-control" id="newEmailIpt" placeholder="name@example.com" required />
               <label for="floatingInput">Email</label>
             </div>
             <div class="input-group mb-3">
               <div class="form-floating">
-                <input type="password" class="form-control" id="passwordIpt-2" placeholder="Senha" />
+                <input type="password" class="form-control" id="passwordIpt-2" placeholder="Senha" required />
                 <label for="floatingInputGroup1">Senha</label>
               </div>
               <span class="input-group-text" onclick="passwordIptChange(2)"><img id="eye-2" src="./assets/images/eye.svg" alt="" /></span>
             </div>
             <div class="input-group mb-3">
               <div class="form-floating">
-                <input type="password" class="form-control" id="passwordIpt-3" placeholder="Repetir senha" />
+                <input type="password" class="form-control" id="passwordIpt-3" placeholder="Repetir senha" required />
                 <label for="floatingInputGroup1">Repetir senha</label>
               </div>
               <span class="input-group-text" onclick="passwordIptChange(3)"><img id="eye-3" src="./assets/images/eye.svg" alt="" /></span>

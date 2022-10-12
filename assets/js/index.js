@@ -16,17 +16,33 @@ let eyesArray = [
 ];
 
 function newUserScreen() {
-  loginAtivo.classList.add('d-none');
-  loginInativo.classList.remove('d-none');
-  newUserAtiva.classList.remove('d-none');
   newUserInativa.classList.add('d-none');
+  newUserAtiva.classList.add('scale-up-ver-center');
+  newUserAtiva.classList.remove('d-none');
+
+  loginAtivo.classList.add('scale-down-ver-center');
+
+  setTimeout(() => {
+    loginAtivo.classList.add('d-none');
+    loginInativo.classList.remove('d-none');
+    newUserAtiva.classList.remove('scale-up-ver-center');
+    loginAtivo.classList.remove('scale-down-ver-center');
+  }, 400);
 }
 
 function loginScreen() {
-  loginAtivo.classList.remove('d-none');
   loginInativo.classList.add('d-none');
-  newUserAtiva.classList.add('d-none');
-  newUserInativa.classList.remove('d-none');
+  loginAtivo.classList.add('scale-up-ver-center');
+  loginAtivo.classList.remove('d-none');
+
+  newUserAtiva.classList.add('scale-down-ver-center');
+
+  setTimeout(() => {
+    newUserAtiva.classList.add('d-none');
+    newUserInativa.classList.remove('d-none');
+    loginAtivo.classList.remove('scale-up-ver-center');
+    newUserAtiva.classList.remove('scale-down-ver-center');
+  }, 400);
 }
 
 function passwordIptChange(id) {
