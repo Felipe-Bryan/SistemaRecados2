@@ -1,3 +1,5 @@
+// Animations
+
 const loginAtivo = document.getElementById('loginAtivo');
 const loginInativo = document.getElementById('loginInativo');
 const newUserAtiva = document.getElementById('newUserAtiva');
@@ -63,4 +65,74 @@ function passwordIptChange(id) {
     eye.src = './assets/images/eye.svg';
     eyesArray[eyeIndex].value = true;
   }
+}
+
+// Listar inputs
+let inputs = document.querySelectorAll('input');
+console.log(inputs);
+
+// Verificar users no localStorage
+let usersStorage = localStorage.getItem('usersStorage');
+if (usersStorage == null) {
+  localStorage.setItem('usersStorage', '[]');
+}
+usersStorage = localStorage.getItem('usersStorage');
+
+// Pegar botão de cadastrar
+const btnCreate = document.getElementById('newUserBtn');
+
+btnCreate.addEventListener('click', (e) => {
+  e.preventDefault();
+  let validOK = validar();
+
+  if (validOK) {
+    createUser();
+  }
+});
+
+// Cadastrar usuário
+let newName = inputs[3];
+let newEmail = inputs[4];
+let newPassword = inputs[5];
+let passwordConfirm = inputs[6];
+
+// Validar senha
+function validar() {
+  if (newPassword.value.length < 5) {
+    alert('Digite uma senha com no mínimo 5 caracteres');
+    return false;
+  }
+
+  if (newPassword.value !== passwordConfirm.value) {
+    alert('As senhas digitadas não conferem');
+    return false;
+  }
+  return true;
+}
+
+// validar email e caso não exista criar novo usuário
+function createUser() {
+  const users = JSON.parse(localStorage.getItem('usersStorage'));
+
+  let existe = users.some((value) => value.email === newEmail.value);
+  if (existe) {
+    alert('E-mail já cadastrado!');
+    return;
+  }
+
+  const newUser = {
+    name: newName.value,
+    email: newEmail.value,
+    password: newPassword.value,
+    recados: [],
+  };
+
+  users.push(newUser);
+  saveUser(users);
+  alert('Conta criada com sucesso!');
+  location.href = './index.html';
+}
+
+function saveUser(newUser) {
+  localStorage.setItem('usersStorage', JSON.stringify(newUser));
 }
