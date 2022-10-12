@@ -1,3 +1,6 @@
+// Identificar modal
+let modalAdd = new bootstrap.Modal(document.getElementById('modalAddTask'));
+
 // Index Animations
 
 const loginAtivo = document.getElementById('loginAtivo');
@@ -75,7 +78,7 @@ let usersStorage = localStorage.getItem('usersStorage');
 if (usersStorage == null) {
   localStorage.setItem('usersStorage', '[]');
 }
-usersStorage = localStorage.getItem('usersStorage');
+usersStorage = JSON.parse(localStorage.getItem('usersStorage'));
 
 // Pegar botão de cadastrar
 const btnCreate = document.getElementById('newUserBtn');
@@ -163,6 +166,7 @@ function login() {
     localStorage.setItem('loggedUser', JSON.stringify(userFound));
     saveSession(email, checksession);
     showHome();
+    location.reload();
   } else {
     alert('E-mail ou senha incorretos');
   }
@@ -230,4 +234,92 @@ function logout() {
   localStorage.removeItem('loggedUser');
 
   showIndex();
+}
+
+// Definir array de Recados
+function findUserIndex() {
+  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  const userEmail = loggedUser.email;
+
+  for (let i = 0; i < usersStorage.length; i++) {
+    if (usersStorage[i].email === userEmail) {
+      return i;
+    }
+  }
+}
+
+userIndex = findUserIndex();
+let recados = usersStorage[userIndex].recados;
+createTable(recados);
+
+let newTaskDetailIpt = document.getElementById('detailIpt');
+let newTaskDescriptionIpt = document.getElementById('descriptionIpt');
+
+function addNewTask() {
+  let task = {
+    id: recados.length + 1,
+    detail: newTaskDetailIpt.value,
+    description: newTaskDescriptionIpt.value,
+  };
+
+  recados.push(task);
+  modalAdd.hide();
+  saveToStorage();
+  createTable(recados);
+}
+
+function saveToStorage() {
+  usersStorage[userIndex].recados = recados;
+  localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
+}
+
+function createTable(recadosArray) {
+  const table = document.getElementById('table');
+
+  table.innerHTML = '';
+
+  recadosArray.forEach((recado) => {
+    table.innerHTML += `
+  <tr id="${recado.id}" class="flip-horizontal-bottom">
+  <td>${recado.detail}</td>
+  <td>${recado.description}</td>
+  <td>
+    <button type="button" class="btn btn-success" onclick="edit(${recado.id})">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <path
+          d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+        />
+      </svg>
+    </button>
+    <button type="button" class="btn btn-danger" onclick="remove(${recado.id})">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+        <path
+          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+        />
+      </svg>
+    </button>
+  </td>
+</tr>`;
+  });
+}
+
+// função remover
+
+function remove(id) {
+  let newRecadosArray = [];
+
+  recados.forEach((recado) => {
+    if (recado.id !== id) {
+      recado.id = newRecadosArray.length + 1;
+      newRecadosArray.push(recado);
+    }
+  });
+
+  recados = newRecadosArray;
+  createTable(recados);
+  saveToStorage();
 }

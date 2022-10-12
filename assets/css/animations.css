@@ -54,3 +54,31 @@
   -webkit-animation: scale-down-ver-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: scale-down-ver-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
+
+/* * animation flip-horizontal-bottom */
+
+@-webkit-keyframes flip-horizontal-bottom {
+  0% {
+    -webkit-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+  }
+}
+@keyframes flip-horizontal-bottom {
+  0% {
+    -webkit-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+  }
+}
+
+.flip-horizontal-bottom {
+  -webkit-animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
