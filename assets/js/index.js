@@ -1,4 +1,4 @@
-// Animations
+// Index Animations
 
 const loginAtivo = document.getElementById('loginAtivo');
 const loginInativo = document.getElementById('loginInativo');
@@ -193,11 +193,41 @@ function checklogged() {
 // mostrar janela de recados
 
 function showHome() {
+  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
   let homeScreen = document.getElementById('home');
   let btnAdd = document.getElementById('btnAdd');
+  let btnLogout = document.getElementById('btnLogout');
   let indexScreen = document.getElementById('index');
+
+  let welcomeMsg = document.getElementById('welcomeMsg');
 
   indexScreen.classList.add('d-none');
   homeScreen.classList.remove('d-none');
   btnAdd.classList.remove('d-none');
+  btnLogout.classList.remove('d-none');
+  welcomeMsg.innerHTML = `Olá, ${loggedUser.name}`;
+}
+
+// mostrar janela index
+
+function showIndex() {
+  let homeScreen = document.getElementById('home');
+  let btnAdd = document.getElementById('btnAdd');
+  let btnLogout = document.getElementById('btnLogout');
+  let indexScreen = document.getElementById('index');
+
+  homeScreen.classList.add('d-none');
+  btnAdd.classList.add('d-none');
+  btnLogout.classList.add('d-none');
+  indexScreen.classList.remove('d-none');
+}
+
+// Logout
+
+function logout() {
+  sessionStorage.removeItem('logged');
+  localStorage.removeItem('session');
+  localStorage.removeItem('loggedUser');
+
+  showIndex();
 }
