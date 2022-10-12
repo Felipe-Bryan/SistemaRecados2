@@ -143,6 +143,7 @@ let iptPassword = inputs[1];
 let logged = sessionStorage.getItem('logged');
 const session = localStorage.getItem('session');
 
+// verifica se o usuário já realizou login anterior e marcou a checkbox para permanecer conectado
 checklogged();
 
 btnLogin.addEventListener('click', (e) => {
@@ -150,6 +151,7 @@ btnLogin.addEventListener('click', (e) => {
   login();
 });
 
+// valida os dados do usuário
 function login() {
   const users = JSON.parse(localStorage.getItem('usersStorage'));
 
@@ -160,12 +162,13 @@ function login() {
   if (userFound) {
     localStorage.setItem('loggedUser', JSON.stringify(userFound));
     saveSession(email, checksession);
-    location.href = './home.html';
+    showHome();
   } else {
     alert('E-mail ou senha incorretos');
   }
 }
 
+// salva os dados da sessão
 function saveSession(data, saveSession) {
   if (saveSession) {
     localStorage.setItem('session', data);
@@ -173,6 +176,7 @@ function saveSession(data, saveSession) {
   sessionStorage.setItem('logged', data);
 }
 
+// verifica se o usuário já realizou login anterior e marcou a checkbox para permanecer conectado
 function checklogged() {
   if (session) {
     sessionStorage.setItem('logged', session);
@@ -182,6 +186,18 @@ function checklogged() {
   if (logged) {
     saveSession(logged, session);
 
-    window.location.href = '/home.html';
+    showHome();
   }
+}
+
+// mostrar janela de recados
+
+function showHome() {
+  let homeScreen = document.getElementById('home');
+  let btnAdd = document.getElementById('btnAdd');
+  let indexScreen = document.getElementById('index');
+
+  indexScreen.classList.add('d-none');
+  homeScreen.classList.remove('d-none');
+  btnAdd.classList.remove('d-none');
 }
