@@ -34,8 +34,14 @@
   right: 10%;
 }
 
-th,
+th {
+  text-align: center;
+}
 td {
+  vertical-align: middle;
+}
+
+.actionsTD {
   text-align: center;
 }
 
@@ -43,4 +49,8 @@ td {
   position: fixed;
   top: 3%;
   right: 10%;
+}
+
+.editIpt {
+  vertical-align: middle;
 }

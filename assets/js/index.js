@@ -283,10 +283,10 @@ function createTable(recadosArray) {
 
   recadosArray.forEach((recado) => {
     table.innerHTML += `
-  <tr id="${recado.id}" class="flip-horizontal-bottom">
+  <tr id="line-${recado.id}" class="flip-horizontal-bottom">
   <td>${recado.detail}</td>
   <td>${recado.description}</td>
-  <td>
+  <td class="actionsTD">
     <button type="button" class="btn btn-success" onclick="edit(${recado.id})">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
         <path
@@ -323,6 +323,54 @@ function remove(id) {
   });
 
   recados = newRecadosArray;
+  createTable(recados);
+  saveToStorage();
+}
+
+function edit(id) {
+  let TaskToEdit = usersStorage[userIndex].recados[id - 1];
+
+  let lineToEdit = document.getElementById(`line-${id}`);
+
+  let editDetailValue = TaskToEdit.detail;
+  let editDescriptionValue = TaskToEdit.description;
+
+  lineToEdit.innerHTML = `
+  <td>
+  <div class="input-group editIpt">
+    <input type="text" id="editDetail" class="form-control" value="${editDetailValue}" placeholder="Detalhamento" aria-label="Username" aria-describedby="basic-addon1" />
+  </div>
+</td>
+<td>
+  <div class="input-group editIpt">
+    <input type="text" id="editDescription" class="form-control" value="${editDescriptionValue}" placeholder="Descrição" aria-label="Username" aria-describedby="basic-addon1" />
+  </div>
+</td>
+<td>
+  <button type="button" class="btn btn-primary" onclick="saveEdit(${id})">Save</button>
+</td>`;
+}
+
+function saveEdit(id) {
+  let editLineId = `line-${id}`;
+  let editLine = document.getElementById(editLineId);
+
+  const editDescriptionIpt = document.getElementById('editDescription');
+  const editDetailIpt = document.getElementById('editDetail');
+
+  let editedTask = {
+    id: id,
+    detail: editDetailIpt.value,
+    description: editDescriptionIpt.value,
+  };
+
+  recados.forEach((recado) => {
+    if (recado.id == id) {
+      recado = editedTask;
+      recados[id - 1] = recado;
+    }
+  });
+
   createTable(recados);
   saveToStorage();
 }
