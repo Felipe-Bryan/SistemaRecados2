@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./assets/css/animations.css" />
     <title>Recados</title>
   </head>
-  <body class="p-0 m-0 gradient body-bg-1" id="body">
+  <body class="p-0 m-0 gradient body-bg-1 vh-100" id="body">
     <!-- Tela index -->
     <div class="container vh-100 d-flex justify-content-center flex-column" id="index">
       <div class="row d-flex justify-content-center align-items-center">
@@ -90,33 +90,34 @@
     </div>
 
     <!-- Tela de recados(home) -->
-
     <div class="container-fluid m-0 p-0 d-none" id="home">
       <br />
-      <div class="row">
+      <div class="row m-0 p-0">
         <div class="col-12 p-0 m-0">
-          <h2 id="welcomeMsg" class="m-1 p-1"></h2>
+          <h2 id="welcomeMsg" class="m-0 p-1"></h2>
         </div>
       </div>
       <br />
 
       <div class="col-12 p-0 m-0">
-        <h4 class="mb-3">Recados</h4>
+        <h4 class="mb-3 p-1">Recados</h4>
       </div>
       <hr class="m-0" />
     </div>
 
-    <div class="table-responsive-md d-none" id="Taskstable">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="">Detalhamento</th>
-            <th>Descrição</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="table"></tbody>
-      </table>
+    <div class="container mt-2 bg-info taskTable">
+      <div class="table-responsive-md d-none" id="Taskstable">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="">Detalhamento</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="table"></tbody>
+        </table>
+      </div>
     </div>
     <!-- Button logout -->
     <button type="button" id="btnLogout" class="btn btn-secondary d-none" onclick="logout()">
@@ -133,7 +134,7 @@
     </button>
 
     <!-- Button trigger modal -->
-    <button type="button" id="btnAdd" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#modalAddTask">Adicionar Recado</button>
+    <button type="button" id="btnAdd" class="btn btn-primary d-none" onclick="openModal()" data-bs-target="#modalAddTask">Adicionar Recado</button>
 
     <!-- Modal -->
     <div class="modal fade" id="modalAddTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

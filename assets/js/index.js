@@ -1,6 +1,12 @@
+// -----------------------------------------------------------------------------------------
 // Identificar modal
 let modalAdd = new bootstrap.Modal(document.getElementById('modalAddTask'));
 
+// -----------------------------------------------------------------------------------------
+// flag editar
+let editOn = false;
+
+// -----------------------------------------------------------------------------------------
 // Index Animations
 
 const loginAtivo = document.getElementById('loginAtivo');
@@ -70,9 +76,11 @@ function passwordIptChange(id) {
   }
 }
 
+// -----------------------------------------------------------------------------------------
 // Listar inputs
 let inputs = document.querySelectorAll('input');
 
+// -----------------------------------------------------------------------------------------
 // Verificar users no localStorage
 let usersStorage = localStorage.getItem('usersStorage');
 if (usersStorage == null) {
@@ -80,7 +88,8 @@ if (usersStorage == null) {
 }
 usersStorage = JSON.parse(localStorage.getItem('usersStorage'));
 
-// Pegar botão de cadastrar
+// -----------------------------------------------------------------------------------------
+// Pegar botão de cadastrar usuário
 const btnCreate = document.getElementById('newUserBtn');
 btnCreate.addEventListener('click', (e) => {
   e.preventDefault();
@@ -91,12 +100,14 @@ btnCreate.addEventListener('click', (e) => {
   }
 });
 
+// -----------------------------------------------------------------------------------------
 // Cadastrar usuário
 let newName = inputs[3];
 let newEmail = inputs[4];
 let newPassword = inputs[5];
 let passwordConfirm = inputs[6];
 
+// -----------------------------------------------------------------------------------------
 // Validar senha
 function validar() {
   if (newPassword.value.length < 5) {
@@ -111,6 +122,7 @@ function validar() {
   return true;
 }
 
+// -----------------------------------------------------------------------------------------
 // validar email e caso não exista criar novo usuário
 function createUser() {
   const users = JSON.parse(localStorage.getItem('usersStorage'));
@@ -134,10 +146,13 @@ function createUser() {
   location.href = './index.html';
 }
 
+// -----------------------------------------------------------------------------------------
+// Salvar novo usuário no localStorage
 function saveUser(newUser) {
   localStorage.setItem('usersStorage', JSON.stringify(newUser));
 }
 
+// -----------------------------------------------------------------------------------------
 // Logar no sistema
 
 const btnLogin = document.getElementById('loginBtn');
@@ -146,6 +161,7 @@ let iptPassword = inputs[1];
 let logged = sessionStorage.getItem('logged');
 const session = localStorage.getItem('session');
 
+// -----------------------------------------------------------------------------------------
 // verifica se o usuário já realizou login anterior e marcou a checkbox para permanecer conectado
 checklogged();
 
@@ -154,6 +170,7 @@ btnLogin.addEventListener('click', (e) => {
   login();
 });
 
+// -----------------------------------------------------------------------------------------
 // valida os dados do usuário
 function login() {
   const users = JSON.parse(localStorage.getItem('usersStorage'));
@@ -172,6 +189,7 @@ function login() {
   }
 }
 
+// -----------------------------------------------------------------------------------------
 // salva os dados da sessão
 function saveSession(data, saveSession) {
   if (saveSession) {
@@ -180,6 +198,7 @@ function saveSession(data, saveSession) {
   sessionStorage.setItem('logged', data);
 }
 
+// -----------------------------------------------------------------------------------------
 // verifica se o usuário já realizou login anterior e marcou a checkbox para permanecer conectado
 function checklogged() {
   if (session) {
@@ -194,6 +213,7 @@ function checklogged() {
   }
 }
 
+// -----------------------------------------------------------------------------------------
 // mostrar janela de recados
 
 function showHome() {
@@ -217,16 +237,23 @@ function showHome() {
   Taskstable.classList.remove('d-none');
 }
 
+// -----------------------------------------------------------------------------------------
 // Logout
 
 function logout() {
-  sessionStorage.removeItem('logged');
-  localStorage.removeItem('session');
-  localStorage.removeItem('loggedUser');
+  if (editOn == true) {
+    alert('Finalize a edição antes de continuar!');
+    return;
+  } else {
+    sessionStorage.removeItem('logged');
+    localStorage.removeItem('session');
+    localStorage.removeItem('loggedUser');
 
-  location.href = './index.html';
+    location.href = './index.html';
+  }
 }
 
+// -----------------------------------------------------------------------------------------
 // Definir array de Recados
 function findUserIndex() {
   let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
@@ -246,6 +273,19 @@ createTable(recados);
 let newTaskDetailIpt = document.getElementById('detailIpt');
 let newTaskDescriptionIpt = document.getElementById('descriptionIpt');
 
+// -----------------------------------------------------------------------------------------
+// abrir modal adicionar recado
+function openModal() {
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar!');
+  } else {
+    modalAdd.show();
+  }
+}
+
+// -----------------------------------------------------------------------------------------
+// adicionar recado
+
 function addNewTask() {
   let task = {
     id: recados.length + 1,
@@ -261,6 +301,9 @@ function addNewTask() {
 
   createTable(recados);
 }
+
+// -----------------------------------------------------------------------------------------
+// salvar os novos dados no localStorage
 
 function saveToStorage() {
   usersStorage[userIndex].recados = recados;
@@ -301,9 +344,14 @@ function createTable(recadosArray) {
   });
 }
 
+// -----------------------------------------------------------------------------------------
 // função remover
 
 function remove(id) {
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar!');
+    return;
+  }
   let newRecadosArray = [];
 
   recados.forEach((recado) => {
@@ -318,28 +366,38 @@ function remove(id) {
   saveToStorage();
 }
 
+// -----------------------------------------------------------------------------------------
+// função editar
+
 function edit(id) {
-  let TaskToEdit = usersStorage[userIndex].recados[id - 1];
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar');
+    return;
+  } else {
+    editOn = true;
 
-  let lineToEdit = document.getElementById(`line-${id}`);
+    let TaskToEdit = usersStorage[userIndex].recados[id - 1];
 
-  let editDetailValue = TaskToEdit.detail;
-  let editDescriptionValue = TaskToEdit.description;
+    let lineToEdit = document.getElementById(`line-${id}`);
 
-  lineToEdit.innerHTML = `
+    let editDetailValue = TaskToEdit.detail;
+    let editDescriptionValue = TaskToEdit.description;
+
+    lineToEdit.innerHTML = `
   <td>
   <div class="input-group editIpt">
     <input type="text" id="editDetail" class="form-control" value="${editDetailValue}" placeholder="Detalhamento" aria-label="Username" aria-describedby="basic-addon1" />
   </div>
-</td>
-<td>
+  </td>
+  <td>
   <div class="input-group editIpt">
-    <input type="text" id="editDescription" class="form-control" value="${editDescriptionValue}" placeholder="Descrição" aria-label="Username" aria-describedby="basic-addon1" />
+  <input type="text" id="editDescription" class="form-control" value="${editDescriptionValue}" placeholder="Descrição" aria-label="Username" aria-describedby="basic-addon1" />
   </div>
-</td>
-<td>
+  </td>
+  <td>
   <button type="button" class="btn btn-primary" onclick="saveEdit(${id})">Save</button>
-</td>`;
+  </td>`;
+  }
 }
 
 function saveEdit(id) {
@@ -364,4 +422,5 @@ function saveEdit(id) {
 
   createTable(recados);
   saveToStorage();
+  editOn = false;
 }
