@@ -203,9 +203,12 @@ function showHome() {
   let btnLogout = document.getElementById('btnLogout');
   let indexScreen = document.getElementById('index');
   let Taskstable = document.getElementById('Taskstable');
+  let body = document.getElementById('body');
 
   let welcomeMsg = document.getElementById('welcomeMsg');
 
+  body.classList.remove('gradient');
+  body.classList.remove('body-bg-1');
   indexScreen.classList.add('d-none');
   homeScreen.classList.remove('d-none');
   btnAdd.classList.remove('d-none');
