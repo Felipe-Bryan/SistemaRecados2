@@ -67,11 +67,11 @@ function passwordIptChange(id) {
 
   if (eyesArray[eyeIndex].value == true) {
     input.type = 'text';
-    eye.src = './assets/images/eye-slash.svg';
+    eye.src = './assets/images/eye.svg';
     eyesArray[eyeIndex].value = false;
   } else {
     input.type = 'password';
-    eye.src = './assets/images/eye.svg';
+    eye.src = './assets/images/eye-slash.svg';
     eyesArray[eyeIndex].value = true;
   }
 }

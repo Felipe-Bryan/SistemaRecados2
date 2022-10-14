@@ -14,6 +14,8 @@
 
 .font-home {
   font-family: fredericka-the-great;
+  color: white;
+  filter: drop-shadow(1px 1px 1px rgb(87, 87, 87)) drop-shadow(1px 1px 1px rgb(255, 255, 255));
 }
 
 .body-bg-1 {
