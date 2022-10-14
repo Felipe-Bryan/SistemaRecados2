@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------------------
 // Identificar modal
 let modalAdd = new bootstrap.Modal(document.getElementById('modalAddTask'));
+let modalRemove = new bootstrap.Modal(document.getElementById('modalRemove'));
 
 // -----------------------------------------------------------------------------------------
 // flag editar
@@ -333,7 +334,7 @@ function createTable(recadosArray) {
         />
       </svg>
     </button>
-    <button type="button" class="btn btn-danger" onclick="remove(${recado.id})">
+    <button type="button" class="btn btn-danger" onclick="openModalRemove(${recado.id})">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
         <path
           d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
@@ -344,16 +345,25 @@ function createTable(recadosArray) {
 </tr>`;
   });
 }
+// -----------------------------------------------------------------------------------------
+let toRemoveId = 0;
+// Abrir modal de remover
+function openModalRemove(id) {
+  toRemoveId = id;
+  modalRemove.show();
+}
 
 // -----------------------------------------------------------------------------------------
 // função remover
 
-function remove(id) {
+function remove() {
   if (editOn == true) {
     alert('Finalize a edição atual antes de continuar!');
     return;
   }
   let newRecadosArray = [];
+
+  let id = toRemoveId;
 
   recados.forEach((recado) => {
     if (recado.id !== id) {
@@ -363,8 +373,10 @@ function remove(id) {
   });
 
   recados = newRecadosArray;
+  toRemoveId = 0;
   createTable(recados);
   saveToStorage();
+  modalRemove.hide();
 }
 
 // -----------------------------------------------------------------------------------------
