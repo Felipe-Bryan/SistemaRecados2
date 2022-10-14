@@ -1,6 +1,30 @@
+@font-face {
+  font-family: 'dancing-script';
+  src: url(/assets/fonts/DancingScript-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: 'fredericka-the-great';
+  src: url(/assets/fonts/FrederickatheGreat-Regular.ttf);
+}
+
+.font-tasks {
+  font-family: dancing-script;
+}
+
+.font-home {
+  font-family: fredericka-the-great;
+}
+
 .body-bg-1 {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab) no-repeat;
   background-size: 300% 300%;
+  height: 100vh;
+}
+
+.body-bg-2 {
+  background-image: url(/assets/images/background.jpg);
+  background-size: cover;
   height: 100vh;
 }
 
@@ -63,4 +87,8 @@ td {
 
 .taskTable {
   border-radius: 5px;
+}
+
+.red {
+  color: rgb(33, 226, 178);
 }

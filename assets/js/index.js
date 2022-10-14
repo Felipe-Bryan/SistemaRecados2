@@ -229,6 +229,7 @@ function showHome() {
 
   body.classList.remove('gradient');
   body.classList.remove('body-bg-1');
+  body.classList.add('body-bg-2');
   indexScreen.classList.add('d-none');
   homeScreen.classList.remove('d-none');
   btnAdd.classList.remove('d-none');
