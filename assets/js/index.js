@@ -8,6 +8,34 @@ let modalRemove = new bootstrap.Modal(document.getElementById('modalRemove'));
 let editOn = false;
 
 // -----------------------------------------------------------------------------------------
+// Alerts personalizados
+
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+
+const alert = (message, type) => {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = [`<div class="alert alert-${type} alert-dismissible" role="alert">`, `   <div>${message}</div>`, '</div>'].join('');
+
+  alertPlaceholder.append(wrapper);
+
+  setTimeout(() => {
+    closealert();
+  }, 2000);
+};
+
+function closealert() {
+  alertPlaceholder.classList.add('fade');
+
+  setTimeout(() => {
+    alertPlaceholder.innerHTML = '';
+  }, 500);
+
+  setTimeout(() => {
+    alertPlaceholder.classList.remove('fade');
+  }, 1100);
+}
+
+// -----------------------------------------------------------------------------------------
 // Index Animations
 
 const loginAtivo = document.getElementById('loginAtivo');
@@ -112,12 +140,12 @@ let passwordConfirm = inputs[6];
 // Validar senha
 function validar() {
   if (newPassword.value.length < 5) {
-    alert('Digite uma senha com no mínimo 5 caracteres');
+    alert('Digite uma senha com no mínimo 5 caracteres', 'warning');
     return false;
   }
 
   if (newPassword.value !== passwordConfirm.value) {
-    alert('As senhas digitadas não conferem');
+    alert('As senhas digitadas não conferem', 'danger');
     return false;
   }
   return true;
@@ -130,7 +158,7 @@ function createUser() {
 
   let existe = users.some((value) => value.email === newEmail.value);
   if (existe) {
-    alert('E-mail já cadastrado!');
+    alert('E-mail já cadastrado!', 'danger');
     return;
   }
 
@@ -143,7 +171,7 @@ function createUser() {
 
   users.push(newUser);
   saveUser(users);
-  alert('Conta criada com sucesso!');
+  alert('Conta criada com sucesso!', 'success');
   location.href = './index.html';
 }
 
@@ -185,8 +213,9 @@ function login() {
     saveSession(email, checksession);
     showHome();
     location.reload();
+    setTimeout(alert('Logado com sucesso', 'success'), 300);
   } else {
-    alert('E-mail ou senha incorretos');
+    alert('E-mail ou senha incorretos', 'danger');
   }
 }
 
@@ -211,6 +240,7 @@ function checklogged() {
     saveSession(logged, session);
 
     showHome();
+    setTimeout(alert('Logado com sucesso', 'success'), 300);
   }
 }
 
@@ -244,14 +274,15 @@ function showHome() {
 
 function logout() {
   if (editOn == true) {
-    alert('Finalize a edição antes de continuar!');
+    alert('Finalize a edição antes de continuar!', 'danger');
     return;
   } else {
     sessionStorage.removeItem('logged');
     localStorage.removeItem('session');
     localStorage.removeItem('loggedUser');
 
-    location.href = './index.html';
+    alert('Deslogado com sucesso! Até logo!', 'warning');
+    setTimeout((location.href = './index.html'), 1000);
   }
 }
 
@@ -279,7 +310,7 @@ let newTaskDescriptionIpt = document.getElementById('descriptionIpt');
 // abrir modal adicionar recado
 function openModal() {
   if (editOn == true) {
-    alert('Finalize a edição atual antes de continuar!');
+    alert('Finalize a edição atual antes de continuar!', 'warning');
   } else {
     modalAdd.show();
   }
@@ -289,19 +320,31 @@ function openModal() {
 // adicionar recado
 
 function addNewTask() {
-  let task = {
-    id: recados.length + 1,
-    detail: newTaskDetailIpt.value,
-    description: newTaskDescriptionIpt.value,
-  };
+  if (newTaskDetailIpt.value == '') {
+    alert('Detalhe não pode estar vazio!', 'danger');
+    newTaskDetailIpt.focus();
+    return;
+  } else if (newTaskDescriptionIpt.value == '') {
+    alert('Descrição não pode estar vazia!', 'danger');
+    newTaskDescriptionIpt.focus();
 
-  recados.push(task);
-  modalAdd.hide();
-  saveToStorage();
-  newTaskDetailIpt.value = '';
-  newTaskDescriptionIpt.value = '';
+    return;
+  } else {
+    let task = {
+      id: recados.length + 1,
+      detail: newTaskDetailIpt.value,
+      description: newTaskDescriptionIpt.value,
+    };
 
-  createTable(recados);
+    recados.push(task);
+    modalAdd.hide();
+    saveToStorage();
+    newTaskDetailIpt.value = '';
+    newTaskDescriptionIpt.value = '';
+
+    createTable(recados);
+    alert('Recado adicionado com sucesso!', 'success');
+  }
 }
 
 // -----------------------------------------------------------------------------------------
@@ -358,7 +401,7 @@ function openModalRemove(id) {
 
 function remove() {
   if (editOn == true) {
-    alert('Finalize a edição atual antes de continuar!');
+    alert('Finalize a edição atual antes de continuar!', 'warning');
     return;
   }
   let newRecadosArray = [];
@@ -377,6 +420,7 @@ function remove() {
   createTable(recados);
   saveToStorage();
   modalRemove.hide();
+  alert('Removido com sucesso', 'success');
 }
 
 // -----------------------------------------------------------------------------------------
@@ -384,7 +428,7 @@ function remove() {
 
 function edit(id) {
   if (editOn == true) {
-    alert('Finalize a edição atual antes de continuar');
+    alert('Finalize a edição atual antes de continuar', 'warning');
     return;
   } else {
     editOn = true;
@@ -436,4 +480,5 @@ function saveEdit(id) {
   createTable(recados);
   saveToStorage();
   editOn = false;
+  alert('Editado com sucesso!', 'success');
 }

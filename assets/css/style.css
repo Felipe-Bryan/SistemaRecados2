@@ -30,6 +30,13 @@
   height: 100vh;
 }
 
+.alert {
+  position: fixed;
+  bottom: 10%;
+  left: 15%;
+  width: 70%;
+}
+
 .active {
   height: 500px;
   display: flex;

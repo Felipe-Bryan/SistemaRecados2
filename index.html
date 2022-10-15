@@ -15,6 +15,10 @@
     <title>Recados</title>
   </head>
   <body class="p-0 m-0 gradient body-bg-1 vh-100" id="body">
+    <!-- Div alerts -->
+    <div class="d-flex justify-content-center align-items-center">
+      <div id="liveAlertPlaceholder" class="alert text-center"></div>
+    </div>
     <!-- Tela index -->
     <div class="container vh-100 d-flex justify-content-center flex-column" id="index">
       <div class="row d-flex justify-content-center align-items-center">
@@ -137,7 +141,7 @@
     <!-- Button trigger modal -->
     <button type="button" id="btnAdd" class="btn btn-primary d-none" onclick="openModal()" data-bs-target="#modalAddTask">Adicionar Recado</button>
 
-    <!-- Modal -->
+    <!-- Modal add task -->
     <div class="modal fade" id="modalAddTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
