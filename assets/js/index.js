@@ -285,7 +285,7 @@ function showHome() {
   let welcomeMsg = document.getElementById('welcomeMsg');
   let homeScreen = document.getElementById('home');
   let btnAdd = document.getElementById('btnAdd');
-  let btnLogout = document.getElementById('btnLogout');
+  let btnTop = document.getElementById('btnTop');
   let indexScreen = document.getElementById('index');
   let Taskstable = document.getElementById('Taskstable');
   let body = document.getElementById('body');
@@ -298,7 +298,7 @@ function showHome() {
   welcomeMsg.innerHTML = setWelcomeMsg();
   homeScreen.classList.remove('d-none');
   btnAdd.classList.remove('d-none');
-  btnLogout.classList.remove('d-none');
+  btnTop.classList.remove('d-none');
   Taskstable.classList.remove('d-none');
 }
 

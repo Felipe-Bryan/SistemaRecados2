@@ -125,7 +125,7 @@
     </div>
 
     <!-- Buttons top -->
-    <div class="buttons-top d-flex justify-content-center align-items-between">
+    <div class="buttons-top d-flex justify-content-center align-items-between d-none" id="btnTop">
       <div class="dropdown me-1">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
@@ -141,7 +141,7 @@
         </ul>
       </div>
 
-      <button type="button" id="btnLogout" class="btn btn-secondary d-none" onclick="logout()">
+      <button type="button" id="btnLogout" class="btn btn-secondary" onclick="logout()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
           <path
             fill-rule="evenodd"
