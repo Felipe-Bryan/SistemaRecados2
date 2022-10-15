@@ -2,6 +2,7 @@
 // Identificar modal
 let modalAdd = new bootstrap.Modal(document.getElementById('modalAddTask'));
 let modalRemove = new bootstrap.Modal(document.getElementById('modalRemove'));
+let changeDataModal = new bootstrap.Modal(document.getElementById('changeDataModal'));
 
 // -----------------------------------------------------------------------------------------
 // flag editar
@@ -519,4 +520,42 @@ function saveEdit(id) {
   saveToStorage();
   editOn = false;
   alert('Recado editado com sucesso!', 'success');
+}
+
+// -----------------------------------------------------------------------------------------
+// alterar dados
+
+let modalContent = document.getElementById('modalChangeBody');
+let modalTitle = document.getElementById('changeDataModalLabel');
+
+function setName() {
+  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  let btnSaveChanges = document.getElementById('btnSaveChanges');
+
+  modalTitle.innerHTML = 'Alterar nome de usuário';
+
+  modalContent.innerHTML = `
+  <div class="form-floating mb-3">
+  <input type="text" class="form-control" id="changeName" value="${loggedUser.name}" placeholder="João">
+  <label for="floatingInput">Novo nome</label>
+  </div>`;
+
+  btnSaveChanges.setAttribute('onclick', 'saveNewName()');
+
+  changeDataModal.show();
+}
+
+function saveNewName() {
+  let changeNameIpt = document.getElementById('changeName');
+
+  let nameToChange = usersStorage[userIndex].name;
+  let newName = changeNameIpt.value;
+
+  usersStorage[userIndex].name = newName;
+
+  localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
+  let welcomeMsg = document.getElementById('welcomeMsg');
+  welcomeMsg.innerHTML = `Olá, ${newName}`;
+
+  changeDataModal.hide();
 }

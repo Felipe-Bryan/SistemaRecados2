@@ -84,10 +84,14 @@ td {
   text-align: center;
 }
 
-#btnLogout {
+.buttons-top {
   position: fixed;
   top: 3%;
   right: 3%;
+}
+
+.topMenu {
+  cursor: pointer;
 }
 
 .editIpt {
