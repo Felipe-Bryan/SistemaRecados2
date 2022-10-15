@@ -54,6 +54,12 @@ let eyesArray = [
   {
     value: true,
   },
+  {
+    value: true,
+  },
+  {
+    value: true,
+  },
 ];
 
 function newUserScreen() {
@@ -276,7 +282,7 @@ function checklogged() {
 // mostrar janela de recados
 
 function showHome() {
-  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  let welcomeMsg = document.getElementById('welcomeMsg');
   let homeScreen = document.getElementById('home');
   let btnAdd = document.getElementById('btnAdd');
   let btnLogout = document.getElementById('btnLogout');
@@ -284,17 +290,21 @@ function showHome() {
   let Taskstable = document.getElementById('Taskstable');
   let body = document.getElementById('body');
 
-  let welcomeMsg = document.getElementById('welcomeMsg');
-
   body.classList.remove('gradient');
   body.classList.remove('body-bg-1');
   body.classList.add('body-bg-2');
+
   indexScreen.classList.add('d-none');
+  welcomeMsg.innerHTML = setWelcomeMsg();
   homeScreen.classList.remove('d-none');
   btnAdd.classList.remove('d-none');
   btnLogout.classList.remove('d-none');
-  welcomeMsg.innerHTML = `Olá, ${loggedUser.name}`;
   Taskstable.classList.remove('d-none');
+}
+
+function setWelcomeMsg() {
+  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  return `Olá, ${loggedUser.name}`;
 }
 
 // -----------------------------------------------------------------------------------------
@@ -547,6 +557,7 @@ function setName() {
 
 function saveNewName() {
   let changeNameIpt = document.getElementById('changeName');
+  let welcomeMsg = document.getElementById('welcomeMsg');
 
   let nameToChange = usersStorage[userIndex].name;
   let newName = changeNameIpt.value;
@@ -554,8 +565,81 @@ function saveNewName() {
   usersStorage[userIndex].name = newName;
 
   localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
-  let welcomeMsg = document.getElementById('welcomeMsg');
-  welcomeMsg.innerHTML = `Olá, ${newName}`;
+  let loggedUser = usersStorage[userIndex];
+  localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+  welcomeMsg.innerHTML = setWelcomeMsg();
 
   changeDataModal.hide();
+}
+
+function setPassword() {
+  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  let btnSaveChanges = document.getElementById('btnSaveChanges');
+
+  modalTitle.innerHTML = 'Alterar senha de usuário';
+
+  modalContent.innerHTML = `
+  <div class="input-group mb-3">
+  <div class="form-floating">
+    <input type="password" class="form-control" id="passwordIpt-4" placeholder="Senha" required />
+    <label for="floatingInputGroup4">Nova senha</label>
+  </div>
+  <span class="input-group-text" onclick="passwordIptChange(4)"><img id="eye-4" src="./assets/images/eye-slash.svg" alt="" /></span>
+</div>
+
+<div class="input-group mb-3">
+<div class="form-floating">
+  <input type="password" class="form-control" id="passwordIpt-5" placeholder="Senha" required />
+  <label for="floatingInputGroup5">Confirme a nova senha</label>
+</div>
+<span class="input-group-text" onclick="passwordIptChange(5)"><img id="eye-5" src="./assets/images/eye-slash.svg" alt="" /></span>
+</div>`;
+
+  btnSaveChanges.setAttribute('onclick', 'saveNewPassword()');
+
+  changeDataModal.show();
+}
+
+function saveNewPassword() {
+  let changePasswordIpt = document.getElementById('passwordIpt-4');
+  let changePasswordIpt2 = document.getElementById('passwordIpt-5');
+
+  let passwordToChange = usersStorage[userIndex].password;
+  let newPassword = changePasswordIpt.value;
+
+  let validOK = validNewPassword();
+
+  if (validOK) {
+    usersStorage[userIndex].password = newPassword;
+
+    localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
+    let loggedUser = usersStorage[userIndex];
+    localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+
+    changePasswordIpt.classList.remove('is-invalid');
+    changePasswordIpt2.classList.remove('is-invalid');
+    changeDataModal.hide();
+  }
+}
+
+function validNewPassword() {
+  let changePasswordIpt = document.getElementById('passwordIpt-4');
+  let changePasswordIpt2 = document.getElementById('passwordIpt-5');
+
+  if (changePasswordIpt.value.length < 5) {
+    alert('Digite uma senha com no mínimo 5 caracteres', 'warning');
+    changePasswordIpt.classList.add('is-invalid');
+    changePasswordIpt.focus();
+    return false;
+  }
+
+  if (changePasswordIpt2.value !== changePasswordIpt.value) {
+    alert('As senhas digitadas não conferem', 'danger');
+    changePasswordIpt2.classList.add('is-invalid');
+    changePasswordIpt2.focus();
+    return false;
+  }
+  changePasswordIpt.classList.remove('is-invalid');
+  changePasswordIpt2.classList.remove('is-invalid');
+  return true;
 }
