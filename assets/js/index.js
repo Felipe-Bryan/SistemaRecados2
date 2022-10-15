@@ -141,13 +141,19 @@ let passwordConfirm = inputs[6];
 function validar() {
   if (newPassword.value.length < 5) {
     alert('Digite uma senha com no mínimo 5 caracteres', 'warning');
+    newPassword.classList.add('is-invalid');
+    newPassword.focus();
     return false;
   }
 
   if (newPassword.value !== passwordConfirm.value) {
     alert('As senhas digitadas não conferem', 'danger');
+    newPassword.classList.add('is-invalid');
+    passwordConfirm.classList.add('is-invalid');
     return false;
   }
+  newPassword.classList.remove('is-invalid');
+  passwordConfirm.classList.remove('is-invalid');
   return true;
 }
 
@@ -159,7 +165,18 @@ function createUser() {
   let existe = users.some((value) => value.email === newEmail.value);
   if (existe) {
     alert('E-mail já cadastrado!', 'danger');
+    newEmail.classList.add('is-invalid');
+    newEmail.focus();
     return;
+  } else if (newName.value == '') {
+    alert('Informe seu nome', 'danger');
+    newName.classList.add('is-invalid');
+    newName.focus();
+    return;
+  } else if (newEmail.value == '') {
+    alert('Informe seu e-mail', 'danger');
+    newEmail.classList.add('is-invalid');
+    newEmail.focus();
   }
 
   const newUser = {
@@ -171,6 +188,12 @@ function createUser() {
 
   users.push(newUser);
   saveUser(users);
+
+  newEmail.classList.remove('is-invalid');
+  newName.classList.remove('is-invalid');
+  newPassword.classList.remove('is-invalid');
+  passwordConfirm.classList.remove('is-invalid');
+
   alert('Conta criada com sucesso!', 'success');
   location.href = './index.html';
 }
@@ -212,10 +235,14 @@ function login() {
     localStorage.setItem('loggedUser', JSON.stringify(userFound));
     saveSession(email, checksession);
     showHome();
+    iptEmail.classList.remove('is-invalid');
+    iptPassword.classList.remove('is-invalid');
     location.reload();
     setTimeout(alert('Logado com sucesso', 'success'), 300);
   } else {
     alert('E-mail ou senha incorretos', 'danger');
+    iptEmail.classList.add('is-invalid');
+    iptPassword.classList.add('is-invalid');
   }
 }
 
@@ -277,12 +304,11 @@ function logout() {
     alert('Finalize a edição antes de continuar!', 'danger');
     return;
   } else {
-    sessionStorage.removeItem('logged');
-    localStorage.removeItem('session');
-    localStorage.removeItem('loggedUser');
-
     alert('Deslogado com sucesso! Até logo!', 'warning');
-    setTimeout((location.href = './index.html'), 1000);
+    setTimeout((location.href = './index.html'), 3000);
+    setTimeout(sessionStorage.removeItem('logged'), 3000);
+    setTimeout(localStorage.removeItem('session'), 3000);
+    setTimeout(localStorage.removeItem('loggedUser'), 3000);
   }
 }
 
@@ -322,10 +348,13 @@ function openModal() {
 function addNewTask() {
   if (newTaskDetailIpt.value == '') {
     alert('Detalhe não pode estar vazio!', 'danger');
+    newTaskDetailIpt.classList.add('is-invalid');
     newTaskDetailIpt.focus();
+
     return;
   } else if (newTaskDescriptionIpt.value == '') {
     alert('Descrição não pode estar vazia!', 'danger');
+    newTaskDescriptionIpt.classList.add('is-invalid');
     newTaskDescriptionIpt.focus();
 
     return;
@@ -340,11 +369,20 @@ function addNewTask() {
     modalAdd.hide();
     saveToStorage();
     newTaskDetailIpt.value = '';
+    newTaskDetailIpt.classList.remove('is-invalid');
     newTaskDescriptionIpt.value = '';
+    newTaskDescriptionIpt.classList.remove('is-invalid');
 
     createTable(recados);
     alert('Recado adicionado com sucesso!', 'success');
   }
+}
+
+function resetInputs() {
+  newTaskDetailIpt.value = '';
+  newTaskDetailIpt.classList.remove('is-invalid');
+  newTaskDescriptionIpt.value = '';
+  newTaskDescriptionIpt.classList.remove('is-invalid');
 }
 
 // -----------------------------------------------------------------------------------------
@@ -420,7 +458,7 @@ function remove() {
   createTable(recados);
   saveToStorage();
   modalRemove.hide();
-  alert('Removido com sucesso', 'success');
+  alert('Recado removido com sucesso', 'success');
 }
 
 // -----------------------------------------------------------------------------------------
@@ -480,5 +518,5 @@ function saveEdit(id) {
   createTable(recados);
   saveToStorage();
   editOn = false;
-  alert('Editado com sucesso!', 'success');
+  alert('Recado editado com sucesso!', 'success');
 }
