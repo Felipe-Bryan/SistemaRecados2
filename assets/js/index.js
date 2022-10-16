@@ -694,3 +694,77 @@ function deleteUser() {
   setTimeout(localStorage.removeItem('loggedUser'), 3000);
   setTimeout((location.href = './index.html'), 3500);
 }
+
+function setEmail() {
+  let loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  let btnSaveChanges = document.getElementById('btnSaveChanges');
+
+  modalTitle.innerHTML = 'Alterar email de usuário';
+
+  modalContent.innerHTML = `
+  <div class="form-floating mb-3">
+  <input type="email" class="form-control" id="emailChangeIpt1" placeholder="name@example.com" required />
+  <label for="floatingInput">Novo email</label>
+</div>
+
+<div class="form-floating mb-3">
+<input type="email" class="form-control" id="emailChangeIpt2" placeholder="name@example.com" required />
+<label for="floatingInput">Confirme o novo email</label>
+</div>`;
+
+  btnSaveChanges.setAttribute('onclick', 'saveNewEmail()');
+  btnSaveChanges.innerText = 'Salvar';
+  btnSaveChanges.classList.add('btn-primary');
+  btnSaveChanges.classList.remove('btn-danger');
+
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar', 'warning');
+  } else {
+    changeDataModal.show();
+  }
+}
+
+function saveNewEmail() {
+  let changeEmailIpt = document.getElementById('emailChangeIpt1');
+  let changeEmailIpt2 = document.getElementById('emailChangeIpt1');
+
+  let emailToChange = usersStorage[userIndex].email;
+  let newEmail = changeEmailIpt.value;
+
+  let validOK = validNewEmail();
+
+  if (validOK) {
+    usersStorage[userIndex].email = newEmail;
+
+    localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
+    let loggedUser = usersStorage[userIndex];
+    localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+
+    changeEmailIpt.classList.remove('is-invalid');
+    changeEmailIpt2.classList.remove('is-invalid');
+    changeDataModal.hide();
+    alert('Email alterado com sucesso!', 'success');
+  }
+}
+
+function validNewEmail() {
+  let changeEmailIpt = document.getElementById('emailChangeIpt1');
+  let changeEmailIpt2 = document.getElementById('emailChangeIpt1');
+
+  if (changeEmailIpt.value.length < 5) {
+    alert('Digite um email válido', 'warning');
+    changeEmailIpt.classList.add('is-invalid');
+    changeEmailIpt.focus();
+    return false;
+  }
+
+  if (changeEmailIpt2.value !== changeEmailIpt.value) {
+    alert('As senhas digitadas não conferem', 'danger');
+    changeEmailIpt2.classList.add('is-invalid');
+    changeEmailIpt2.focus();
+    return false;
+  }
+  changeEmailIpt.classList.remove('is-invalid');
+  changeEmailIpt2.classList.remove('is-invalid');
+  return true;
+}
