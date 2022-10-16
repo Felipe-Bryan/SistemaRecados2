@@ -551,8 +551,15 @@ function setName() {
   </div>`;
 
   btnSaveChanges.setAttribute('onclick', 'saveNewName()');
+  btnSaveChanges.innerText = 'Salvar';
+  btnSaveChanges.classList.add('btn-primary');
+  btnSaveChanges.classList.remove('btn-danger');
 
-  changeDataModal.show();
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar', 'warning');
+  } else {
+    changeDataModal.show();
+  }
 }
 
 function saveNewName() {
@@ -570,6 +577,7 @@ function saveNewName() {
   welcomeMsg.innerHTML = setWelcomeMsg();
 
   changeDataModal.hide();
+  alert('Nome de usuário alterado com sucesso', 'success');
 }
 
 function setPassword() {
@@ -596,8 +604,15 @@ function setPassword() {
 </div>`;
 
   btnSaveChanges.setAttribute('onclick', 'saveNewPassword()');
+  btnSaveChanges.innerText = 'Salvar';
+  btnSaveChanges.classList.add('btn-primary');
+  btnSaveChanges.classList.remove('btn-danger');
 
-  changeDataModal.show();
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar', 'warning');
+  } else {
+    changeDataModal.show();
+  }
 }
 
 function saveNewPassword() {
@@ -619,6 +634,7 @@ function saveNewPassword() {
     changePasswordIpt.classList.remove('is-invalid');
     changePasswordIpt2.classList.remove('is-invalid');
     changeDataModal.hide();
+    alert('Senha alterada com sucesso!', 'success');
   }
 }
 
@@ -642,4 +658,39 @@ function validNewPassword() {
   changePasswordIpt.classList.remove('is-invalid');
   changePasswordIpt2.classList.remove('is-invalid');
   return true;
+}
+
+function confirmDeleteUser() {
+  modalTitle.innerHTML = 'Confirmar exclusão de usuário';
+  let btnSaveChanges = document.getElementById('btnSaveChanges');
+
+  modalContent.innerHTML = `Tem certeza da exclusão da sua conta de recados?`;
+
+  btnSaveChanges.innerText = 'Remover';
+  btnSaveChanges.classList.remove('btn-primary');
+  btnSaveChanges.classList.add('btn-danger');
+  btnSaveChanges.setAttribute('onclick', 'deleteUser()');
+
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar', 'warning');
+  } else {
+    changeDataModal.show();
+  }
+}
+
+function deleteUser() {
+  let usersStorage = JSON.parse(localStorage.getItem('usersStorage'));
+  let id = userIndex;
+
+  changeDataModal.hide();
+
+  usersStorage.splice(userIndex, 1);
+  localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
+
+  alert('Usuário deletado com sucesso', 'success');
+
+  setTimeout(sessionStorage.removeItem('logged'), 3000);
+  setTimeout(localStorage.removeItem('session'), 3000);
+  setTimeout(localStorage.removeItem('loggedUser'), 3000);
+  setTimeout((location.href = './index.html'), 3500);
 }
