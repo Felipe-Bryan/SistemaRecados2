@@ -60,6 +60,9 @@ let eyesArray = [
   {
     value: true,
   },
+  {
+    value: true,
+  },
 ];
 
 function newUserScreen() {
@@ -113,8 +116,34 @@ function passwordIptChange(id) {
 }
 
 // -----------------------------------------------------------------------------------------
+// Index Animations Xs
+
+const xsLogin = document.getElementById('loginAtivoXs');
+const newUserXs = document.getElementById('newUserXs');
+let xsFlag = true;
+
+function changeScreenXs() {
+  if (xsFlag) {
+    newUserXs.classList.remove('d-none');
+    xsLogin.classList.remove('d-flex');
+    xsLogin.classList.add('d-none');
+    xsLogin.classList.remove('slide-top');
+    newUserXs.classList.add('slide-top');
+    xsFlag = false;
+  } else {
+    xsLogin.classList.remove('d-none');
+    xsLogin.classList.add('d-flex');
+    newUserXs.classList.add('d-none');
+    newUserXs.classList.remove('slide-top');
+    xsLogin.classList.add('slide-top');
+    xsFlag = true;
+  }
+}
+
+// -----------------------------------------------------------------------------------------
 // Listar inputs
 let inputs = document.querySelectorAll('input');
+console.log(inputs);
 
 // -----------------------------------------------------------------------------------------
 // Verificar users no localStorage
@@ -136,12 +165,27 @@ btnCreate.addEventListener('click', (e) => {
   }
 });
 
+const btnCreateXs = document.getElementById('newUserBtnXs');
+btnCreateXs.addEventListener('click', (e) => {
+  e.preventDefault();
+  let validOK = validarXs();
+
+  if (validOK) {
+    createUserXs();
+  }
+});
+
 // -----------------------------------------------------------------------------------------
 // Cadastrar usuário
 let newName = inputs[3];
 let newEmail = inputs[4];
 let newPassword = inputs[5];
 let passwordConfirm = inputs[6];
+
+let newNameXs = inputs[10];
+let newEmailXs = inputs[11];
+let newPasswordXs = inputs[12];
+let passwordConfirmXs = inputs[13];
 
 // -----------------------------------------------------------------------------------------
 // Validar senha
@@ -161,6 +205,25 @@ function validar() {
   }
   newPassword.classList.remove('is-invalid');
   passwordConfirm.classList.remove('is-invalid');
+  return true;
+}
+
+function validarXs() {
+  if (newPasswordXs.value.length < 5) {
+    alert('Digite uma senha com no mínimo 5 caracteres', 'warning');
+    newPasswordXs.classList.add('is-invalid');
+    newPasswordXs.focus();
+    return false;
+  }
+
+  if (newPasswordXs.value !== passwordConfirmXs.value) {
+    alert('As senhas digitadas não conferem', 'danger');
+    newPasswordXs.classList.add('is-invalid');
+    passwordConfirmXs.classList.add('is-invalid');
+    return false;
+  }
+  newPasswordXs.classList.remove('is-invalid');
+  passwordConfirmXs.classList.remove('is-invalid');
   return true;
 }
 
@@ -202,7 +265,46 @@ function createUser() {
   passwordConfirm.classList.remove('is-invalid');
 
   alert('Conta criada com sucesso!', 'success');
-  location.href = './index.html';
+  setTimeout((location.href = './index.html'), 3000);
+}
+
+function createUserXs() {
+  const users = JSON.parse(localStorage.getItem('usersStorage'));
+
+  let existe = users.some((value) => value.email === newEmailXs.value);
+  if (existe) {
+    alert('E-mail já cadastrado!', 'danger');
+    newEmailXs.classList.add('is-invalid');
+    newEmailXs.focus();
+    return;
+  } else if (newNameXs.value == '') {
+    alert('Informe seu nome', 'danger');
+    newNameXs.classList.add('is-invalid');
+    newNameXs.focus();
+    return;
+  } else if (newEmailXs.value == '') {
+    alert('Informe seu e-mail', 'danger');
+    newEmailXs.classList.add('is-invalid');
+    newEmailXs.focus();
+  }
+
+  const newUser = {
+    name: newNameXs.value,
+    email: newEmailXs.value,
+    password: newPasswordXs.value,
+    recados: [],
+  };
+
+  users.push(newUser);
+  saveUser(users);
+
+  newEmailXs.classList.remove('is-invalid');
+  newNameXs.classList.remove('is-invalid');
+  newPasswordXs.classList.remove('is-invalid');
+  passwordConfirmXs.classList.remove('is-invalid');
+
+  alert('Conta criada com sucesso!', 'success');
+  setTimeout((location.href = './index.html'), 3000);
 }
 
 // -----------------------------------------------------------------------------------------
@@ -215,8 +317,11 @@ function saveUser(newUser) {
 // Logar no sistema
 
 const btnLogin = document.getElementById('loginBtn');
+const btnLoginXs = document.getElementById('loginBtnXs');
 let iptEmail = inputs[0];
 let iptPassword = inputs[1];
+let iptEmailXs = inputs[7];
+let iptPasswordXs = inputs[8];
 let logged = sessionStorage.getItem('logged');
 const session = localStorage.getItem('session');
 
@@ -227,6 +332,11 @@ checklogged();
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
   login();
+});
+
+btnLoginXs.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginXs();
 });
 
 // -----------------------------------------------------------------------------------------
@@ -250,6 +360,28 @@ function login() {
     alert('E-mail ou senha incorretos', 'danger');
     iptEmail.classList.add('is-invalid');
     iptPassword.classList.add('is-invalid');
+  }
+}
+
+function loginXs() {
+  const users = JSON.parse(localStorage.getItem('usersStorage'));
+
+  const userFound = users.find((value) => value.email === iptEmailXs.value && value.password === iptPasswordXs.value);
+  const email = iptEmailXs.value;
+  const checksession = inputs[9].checked;
+
+  if (userFound) {
+    localStorage.setItem('loggedUser', JSON.stringify(userFound));
+    saveSession(email, checksession);
+    showHome();
+    iptEmailXs.classList.remove('is-invalid');
+    iptPasswordXs.classList.remove('is-invalid');
+    location.reload();
+    setTimeout(alert('Logado com sucesso', 'success'), 300);
+  } else {
+    alert('E-mail ou senha incorretos', 'danger');
+    iptEmailXs.classList.add('is-invalid');
+    iptPasswordXs.classList.add('is-invalid');
   }
 }
 
@@ -441,6 +573,10 @@ function createTable(recadosArray) {
 let toRemoveId = 0;
 // Abrir modal de remover
 function openModalRemove(id) {
+  if (editOn == true) {
+    alert('Finalize a edição atual antes de continuar!', 'warning');
+    return;
+  }
   toRemoveId = id;
   modalRemove.show();
 }
@@ -449,10 +585,6 @@ function openModalRemove(id) {
 // função remover
 
 function remove() {
-  if (editOn == true) {
-    alert('Finalize a edição atual antes de continuar!', 'warning');
-    return;
-  }
   let newRecadosArray = [];
 
   let id = toRemoveId;

@@ -21,7 +21,7 @@
     </div>
     <!-- Tela index -->
     <div class="container vh-100 d-flex justify-content-center flex-column" id="index">
-      <div class="row d-flex justify-content-center align-items-center">
+      <div class="row justify-content-center align-items-center d-none d-sm-flex">
         <!-- Tela de login Ativa -->
         <div class="active col-12 col-md-5 bg-info me-1 shadow" id="loginAtivo">
           <div>
@@ -89,6 +89,75 @@
         <div class="inactive col-12 col-md-6 bg-primary shadow" id="newUserInativa">
           <p class="m-0 p-0 ask">Ainda não tem conta?</p>
           <a class="m-0 p-0 link" onclick="newUserScreen()">Cadastre-se</a>
+        </div>
+      </div>
+
+      <!-- Tela de login XS -->
+      <div id="loginXs" class="loginXs">
+        <div class="active col-12 bg-info me-1 shadow d-flex d-sm-none" id="loginAtivoXs">
+          <div>
+            <h3 class="text-center">Entrar</h3>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="emailIptXs" placeholder="name@example.com" required />
+              <label for="floatingInput">Email</label>
+            </div>
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input type="password" class="form-control" id="passwordIpt-4" placeholder="Senha" required />
+                <label for="floatingInputGroup1">Senha</label>
+              </div>
+              <span class="input-group-text" onclick="passwordIptChange(4)"><img id="eye-4" src="./assets/images/eye-slash.svg" alt="" /></span>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" role="switch" id="checkSessionXs" name="checkSessionXs" />
+              <label class="form-check-label" for="checkSessionXs">Permanecer conectado</label>
+            </div>
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" type="button" id="loginBtnXs">Logar</button>
+            </div>
+            <br />
+            <div class="col-12">
+              <p class="m-0 p-0">Ainda não tem conta?</p>
+              <a class="m-0 p-0 linkSm" onclick="changeScreenXs()">Cadastre-se</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tela de cadastro XS -->
+      <div class="active col-12 bg-primary shadow d-none" id="newUserXs">
+        <div>
+          <h3 class="text-center txt-white">Novo usuário</h3>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nameIptXs" placeholder="João" required />
+            <label for="floatingInput">Nome</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="newEmailIptXs" placeholder="name@example.com" required />
+            <label for="floatingInput">Email</label>
+          </div>
+          <div class="input-group mb-3">
+            <div class="form-floating">
+              <input type="password" class="form-control" id="passwordIpt-5" placeholder="Senha" required />
+              <label for="floatingInputGroup1">Senha</label>
+            </div>
+            <span class="input-group-text" onclick="passwordIptChange(5)"><img id="eye-5" src="./assets/images/eye-slash.svg" alt="" /></span>
+          </div>
+          <div class="input-group mb-3">
+            <div class="form-floating">
+              <input type="password" class="form-control" id="passwordIpt-6" placeholder="Repetir senha" required />
+              <label for="floatingInputGroup1">Repetir senha</label>
+            </div>
+            <span class="input-group-text" onclick="passwordIptChange(6)"><img id="eye-6" src="./assets/images/eye-slash.svg" alt="" /></span>
+          </div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-info" type="button" id="newUserBtnXs">Cadastrar</button>
+          </div>
+          <br />
+          <div class="col-12 me-1">
+            <p class="m-0 p-0 ask">Já possui conta?</p>
+            <a class="m-0 p-0 link" onclick="changeScreenXs()">Fazer login</a>
+          </div>
         </div>
       </div>
     </div>

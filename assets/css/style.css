@@ -62,6 +62,16 @@
   cursor: pointer;
 }
 
+.linkSm {
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.txt-white {
+  color: white;
+}
 .ask {
   color: white;
   font-weight: 600;
