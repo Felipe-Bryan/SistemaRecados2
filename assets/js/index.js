@@ -143,7 +143,6 @@ function changeScreenXs() {
 // -----------------------------------------------------------------------------------------
 // Listar inputs
 let inputs = document.querySelectorAll('input');
-console.log(inputs);
 
 // -----------------------------------------------------------------------------------------
 // Verificar users no localStorage
