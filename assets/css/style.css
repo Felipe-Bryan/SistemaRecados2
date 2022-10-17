@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'dancing-script';
-  src: url(/assets/fonts/DancingScript-VariableFont_wght.ttf);
+  src: url(../fonts/DancingScript-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: 'fredericka-the-great';
-  src: url(/assets/fonts/FrederickatheGreat-Regular.ttf);
+  src: url(../fonts/FrederickatheGreat-Regular.ttf);
 }
 
 .font-tasks {
@@ -25,7 +25,7 @@
 }
 
 .body-bg-2 {
-  background-image: url(/assets/images/background.jpg);
+  background-image: url(../images/background.jpg);
   background-size: cover;
   height: 100vh;
 }

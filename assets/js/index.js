@@ -600,7 +600,7 @@ function remove() {
   createTable(recados);
   saveToStorage();
   modalRemove.hide();
-  alert('Recado removido com sucesso', 'success');
+  alert('Recado removido com sucesso', 'info');
 }
 
 // -----------------------------------------------------------------------------------------
@@ -632,7 +632,7 @@ function edit(id) {
   </div>
   </td>
   <td>
-  <button type="button" class="btn btn-primary" onclick="saveEdit(${id})">Save</button>
+  <button type="button" class="btn btn-primary" onclick="saveEdit(${id})">Salvar</button>
   </td>`;
   }
 }
@@ -708,7 +708,7 @@ function saveNewName() {
   welcomeMsg.innerHTML = setWelcomeMsg();
 
   changeDataModal.hide();
-  alert('Nome de usuário alterado com sucesso', 'success');
+  alert('Nome de usuário alterado com sucesso', 'info');
 }
 
 function setPassword() {
@@ -765,7 +765,7 @@ function saveNewPassword() {
     changePasswordIpt.classList.remove('is-invalid');
     changePasswordIpt2.classList.remove('is-invalid');
     changeDataModal.hide();
-    alert('Senha alterada com sucesso!', 'success');
+    alert('Senha alterada com sucesso!', 'info');
   }
 }
 
@@ -818,7 +818,7 @@ function deleteUser() {
   usersStorage.splice(userIndex, 1);
   localStorage.setItem('usersStorage', JSON.stringify(usersStorage));
 
-  alert('Usuário deletado com sucesso', 'success');
+  alert('Usuário deletado com sucesso', 'info');
 
   setTimeout(sessionStorage.removeItem('logged'), 3000);
   setTimeout(localStorage.removeItem('session'), 3000);
@@ -874,7 +874,7 @@ function saveNewEmail() {
     changeEmailIpt.classList.remove('is-invalid');
     changeEmailIpt2.classList.remove('is-invalid');
     changeDataModal.hide();
-    alert('Email alterado com sucesso!', 'success');
+    alert('Email alterado com sucesso!', 'info');
   }
 }
 
