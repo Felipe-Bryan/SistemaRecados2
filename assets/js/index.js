@@ -471,9 +471,6 @@ userIndex = findUserIndex();
 let recados = usersStorage[userIndex].recados;
 createTable(recados);
 
-let newTaskDetailIpt = document.getElementById('detailIpt');
-let newTaskDescriptionIpt = document.getElementById('descriptionIpt');
-
 // -----------------------------------------------------------------------------------------
 // abrir modal adicionar recado
 function openModal() {
@@ -486,6 +483,9 @@ function openModal() {
 
 // -----------------------------------------------------------------------------------------
 // adicionar recado
+
+let newTaskDetailIpt = document.getElementById('detailIpt');
+let newTaskDescriptionIpt = document.getElementById('descriptionIpt');
 
 function addNewTask() {
   if (newTaskDetailIpt.value == '') {
