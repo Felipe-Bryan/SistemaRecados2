@@ -115,3 +115,7 @@ td {
 .red {
   color: rgb(33, 226, 178);
 }
+
+.runBtn {
+  transform: translateY(-200%);
+}

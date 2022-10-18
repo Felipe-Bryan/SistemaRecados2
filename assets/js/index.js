@@ -899,3 +899,47 @@ function validNewEmail() {
   changeEmailIpt2.classList.remove('is-invalid');
   return true;
 }
+
+// -----------------------------------------------------------------------------------------
+// running button
+
+function btnRun() {
+  const runningBtn = document.getElementById('newUserBtn');
+
+  let validRun = validateRun();
+
+  if (!validRun) {
+    runningBtn.classList.add('runBtn');
+    alert('Revise os dados digitados', 'danger');
+  }
+}
+
+function resetBtn() {
+  const runningBtn = document.getElementById('newUserBtn');
+  runningBtn.classList.remove('runBtn');
+}
+
+function validateRun() {
+  let nameIpt = inputs[3];
+  let emailIpt = inputs[4];
+  let passwordIpt = inputs[5];
+  let passwordConfirmIpt = inputs[6];
+
+  if (nameIpt.value == '') {
+    return false;
+  }
+  if (emailIpt.value == '') {
+    return false;
+  }
+  if (passwordIpt.value == '') {
+    return false;
+  }
+  if (passwordConfirmIpt.value == '') {
+    return false;
+  }
+  if (passwordIpt.value != passwordConfirmIpt.value) {
+    return false;
+  }
+
+  return true;
+}
