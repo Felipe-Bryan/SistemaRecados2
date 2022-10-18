@@ -63,6 +63,12 @@ let eyesArray = [
   {
     value: true,
   },
+  {
+    value: true,
+  },
+  {
+    value: true,
+  },
 ];
 
 function newUserScreen() {
@@ -720,18 +726,18 @@ function setPassword() {
   modalContent.innerHTML = `
   <div class="input-group mb-3">
   <div class="form-floating">
-    <input type="password" class="form-control" id="passwordIpt-4" placeholder="Senha" required />
+    <input type="password" class="form-control" id="passwordIpt-7" placeholder="Senha" required />
     <label for="floatingInputGroup4">Nova senha</label>
   </div>
-  <span class="input-group-text" onclick="passwordIptChange(4)"><img id="eye-4" src="./assets/images/eye-slash.svg" alt="" /></span>
+  <span class="input-group-text" onclick="passwordIptChange(7)"><img id="eye-7" src="./assets/images/eye-slash.svg" alt="" /></span>
 </div>
 
 <div class="input-group mb-3">
 <div class="form-floating">
-  <input type="password" class="form-control" id="passwordIpt-5" placeholder="Senha" required />
+  <input type="password" class="form-control" id="passwordIpt-8" placeholder="Senha" required />
   <label for="floatingInputGroup5">Confirme a nova senha</label>
 </div>
-<span class="input-group-text" onclick="passwordIptChange(5)"><img id="eye-5" src="./assets/images/eye-slash.svg" alt="" /></span>
+<span class="input-group-text" onclick="passwordIptChange(8)"><img id="eye-8" src="./assets/images/eye-slash.svg" alt="" /></span>
 </div>`;
 
   btnSaveChanges.setAttribute('onclick', 'saveNewPassword()');
