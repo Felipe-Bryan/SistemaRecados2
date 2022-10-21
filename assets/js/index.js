@@ -270,7 +270,9 @@ function createUser() {
   passwordConfirm.classList.remove('is-invalid');
 
   alert('Conta criada com sucesso!', 'success');
-  setTimeout((location.href = './index.html'), 3000);
+  setTimeout(() => {
+    location.href = './index.html';
+  }, 2000);
 }
 
 function createUserXs() {
@@ -411,7 +413,10 @@ function checklogged() {
     saveSession(logged, session);
 
     showHome();
-    setTimeout(alert('Logado com sucesso', 'success'), 300);
+
+    setTimeout(() => {
+      alert('Logado com sucesso', 'success');
+    }, 300);
   }
 }
 
@@ -453,10 +458,22 @@ function logout() {
     return;
   } else {
     alert('Deslogado com sucesso! Até logo!', 'warning');
-    setTimeout((location.href = './index.html'), 3000);
-    setTimeout(sessionStorage.removeItem('logged'), 3000);
-    setTimeout(localStorage.removeItem('session'), 3000);
-    setTimeout(localStorage.removeItem('loggedUser'), 3000);
+
+    setTimeout(() => {
+      location.href = './index.html';
+    }, 1000);
+
+    setTimeout(() => {
+      sessionStorage.removeItem('logged');
+    }, 900);
+
+    setTimeout(() => {
+      localStorage.removeItem('session');
+    }, 900);
+
+    setTimeout(() => {
+      localStorage.removeItem('loggedUser');
+    }, 900);
   }
 }
 
@@ -753,8 +770,8 @@ function setPassword() {
 }
 
 function saveNewPassword() {
-  let changePasswordIpt = document.getElementById('passwordIpt-4');
-  let changePasswordIpt2 = document.getElementById('passwordIpt-5');
+  let changePasswordIpt = document.getElementById('passwordIpt-7');
+  let changePasswordIpt2 = document.getElementById('passwordIpt-8');
 
   let passwordToChange = usersStorage[userIndex].password;
   let newPassword = changePasswordIpt.value;
@@ -776,8 +793,8 @@ function saveNewPassword() {
 }
 
 function validNewPassword() {
-  let changePasswordIpt = document.getElementById('passwordIpt-4');
-  let changePasswordIpt2 = document.getElementById('passwordIpt-5');
+  let changePasswordIpt = document.getElementById('passwordIpt-7');
+  let changePasswordIpt2 = document.getElementById('passwordIpt-8');
 
   if (changePasswordIpt.value.length < 5) {
     alert('Digite uma senha com no mínimo 5 caracteres', 'warning');
@@ -826,10 +843,18 @@ function deleteUser() {
 
   alert('Usuário deletado com sucesso', 'info');
 
-  setTimeout(sessionStorage.removeItem('logged'), 3000);
-  setTimeout(localStorage.removeItem('session'), 3000);
-  setTimeout(localStorage.removeItem('loggedUser'), 3000);
-  setTimeout((location.href = './index.html'), 3500);
+  setTimeout(() => {
+    sessionStorage.removeItem('logged');
+  }, 900);
+  setTimeout(() => {
+    localStorage.removeItem('session');
+  }, 900);
+  setTimeout(() => {
+    localStorage.removeItem('loggedUser');
+  }, 900);
+  setTimeout(() => {
+    location.href = './index.html';
+  }, 1000);
 }
 
 function setEmail() {
