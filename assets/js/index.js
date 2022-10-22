@@ -937,11 +937,21 @@ function validNewEmail() {
 function btnRun() {
   const runningBtn = document.getElementById('newUserBtn');
 
+  let nameIpt = inputs[3];
+  let emailIpt = inputs[4];
+  let passwordIpt = inputs[5];
+  let passwordConfirmIpt = inputs[6];
+
   let validRun = validateRun();
 
   if (!validRun) {
     runningBtn.classList.add('runBtn');
     alert('Revise os dados digitados', 'danger');
+
+    nameIpt.classList.add('is-invalid');
+    emailIpt.classList.add('is-invalid');
+    passwordIpt.classList.add('is-invalid');
+    passwordConfirmIpt.classList.add('is-invalid');
   }
 }
 
